@@ -10,7 +10,7 @@ app = Flask(__name__)
 CORS(app)
 
 def index():
-    return "Data Generator is running..."
+    return "Aydar"
 
 def testservice():
     rdd = RandomDealData()
