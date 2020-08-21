@@ -5,6 +5,8 @@ import numpy, random
 from datetime import datetime, timedelta
 import json
 from RandomDealData import *
+import mysql.connector
+import mysql.connector
 
 app = Flask(__name__)
 CORS(app)
@@ -45,4 +47,30 @@ def get_time():
     s = time.ctime(time.time())
     return s
 
+def generate_data():
+    rdd = RandomDealData()
+    instrList = rdd.createInstrumentList()
+    dataList = []
+    for i in range(10):
+        data = rdd.createRandomData(instrList)
+
+
+
+def get_data():
+    """this could be any function that blocks until data is ready"""
+
+    isSuccessfull = True
+
+    try:
+        connection = mysql.connector.connect(host='127.0.0.1', database='db_grad_cs_1917', user='root', password='ppp')
+        # Creating a cursor object using the cursor() method
+        cursor = connection.cursor()
+    except Exception as e:
+        print(e)
+        isSuccessfull = False
+    finally:
+        resp = {
+            'isSuccessfull': isSuccessfull
+        }
+        return Response(json.dumps(resp), status=200, mimetype='application/json')
 

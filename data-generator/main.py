@@ -23,6 +23,14 @@ def stream():
 def sse_stream():
      return webServiceStream.sse_stream()
 
+@app.route('/getData')
+def get_data():
+     return webServiceStream.get_data()
+
+@app.route('/generateData')
+def generate_data():
+     return webServiceStream.generate_data()
+
 
 def bootapp():
     #global rdd 
