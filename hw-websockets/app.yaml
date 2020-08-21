@@ -1,0 +1,25 @@
+runtime: custom
+env: flex
+service: echo-service
+
+runtime_config:
+  # You can also specify 2 for Python 2.7
+  python_version: 3
+
+# This sample incurs costs to run on the App Engine flexible environment.
+# The settings below are to reduce costs during testing and are not appropriate for production use
+handlers:
+  - url: /
+    static_files: .*
+    upload: .*
+    http_headers:
+      Access-Control-Allow-Origin: .*
+      X-Accel-Buffering: False
+
+
+manual_scaling:
+  instances: 1
+resources:
+  cpu: 1
+  memory_gb: 0.5
+  disk_size_gb: 10
