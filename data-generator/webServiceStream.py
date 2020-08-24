@@ -88,3 +88,15 @@ def get_data():
         }
         return Response(json.dumps(resp), status=200, mimetype='application/json')
 
+
+def is_user_in_db(user_id, user_pwd):
+    users = dao.get_credentials(user_id, user_pwd)
+    res = len(users) > 0
+    resp = {
+        'isPresented': res
+    }
+    return Response(json.dumps(resp), status=200, mimetype='application/json')
+
+
+
+

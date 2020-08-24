@@ -2,6 +2,7 @@ from flask import Flask, render_template, Response
 from flask_sse import sse
 from flask_cors import CORS
 import requests
+from flask import request
 import time
 
 app = Flask(__name__)
@@ -25,6 +26,14 @@ def client_to_server():
 @app.route('/getData')
 def get_data():
     r = requests.get('http://localhost:8080/getData')
+    return Response(r.iter_lines(chunk_size=1), mimetype="text/json")
+
+@app.route('/login', methods=['Post'])
+def get_user():
+    username = request.form['username']
+    password = request.form['password']
+    data = {'username': username, 'password': password}
+    r = requests.post('http://localhost:8080/login', data=data)
     return Response(r.iter_lines(chunk_size=1), mimetype="text/json")
 
 @app.route('/')
