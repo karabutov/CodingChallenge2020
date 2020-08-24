@@ -5,7 +5,7 @@ import json
 
 def get_connection():
     connection = mysql.connector.connect(host='127.0.0.1',
-                                database='db_grad_cs_1917',
+                                database='db_grad_cs_1917_no_deal_data',
                                 user='root', password='ppp')
     return connection
 
@@ -92,6 +92,35 @@ def select_all_deals_data():
         close_connection(connection)
 
 
-insert_data(generate_random_deal())
-select_all_deals_data()
+def select_top_deals_data(amount=10):
+    connection = get_connection()
+    cursor = connection.cursor()
+    try:
+        select_deal_sql = '''SELECT d.deal_id, i.instrument_name, c.counterparty_name, 
+                                    d.deal_amount, d.deal_type, d.deal_quantity, 
+                                    d.deal_time FROM deal as d 
+                                    INNER JOIN instrument as i 
+                                    ON d.deal_instrument_id = i.instrument_id 
+                                    INNER JOIN counterparty as c 
+                                    ON d.deal_counterparty_id = c.counterparty_id 
+                                    ORDER BY deal_id DESC LIMIT 10'''
+        cursor.execute(select_deal_sql, (amount,))
+        result = cursor.fetchall()
+
+        return result
+    finally:
+        cursor.close()
+        close_connection(connection)
+
+
+def convert_tuple_to_json(data):
+    json_data = {'id': data[0],
+                 'instrumentName': data[1],
+                 'cpty': data[2],
+                 'price': data[3],
+                 'type': data[4],
+                 'quantity': data[5],
+                 'time': data[6]}
+
+    return json_data
 
