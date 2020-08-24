@@ -13,7 +13,7 @@ const AllDeals = props =>{
 
     const getDeals = async () => {
         try {
-          const res = await axios.get(environment.url + "/getTopDeals");
+          const res = await axios.get(environment.url2 + "/getTopDeals");
           let dealsArr = await res.data;
           setDeals(dealsArr);
         } catch (e) {
