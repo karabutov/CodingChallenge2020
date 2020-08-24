@@ -1,50 +1,47 @@
 import React, { useState, useEffect } from 'react';
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import axios from 'axios';
 import './App.css';
+import {environment} from './utils';
+import {AppBar, Toolbar, Typography, Snackbar } from '@material-ui/core';
 import AllDeals from './Components/AllDeals';
-
 function App() {
-  const [deals, setDeals] = useState([]);
 
-  const ALL_DEALS_URL = "http://localhost:8090/client/testservice";
-
+  const [dbConnectionMsgOpen, setDbConnectionMsgOpen] = useState(true);
   useEffect(() => {
-    //getDBConection();
-    getDeals();
+    getDBConection();
   }, []);
 
-  const getDeals = async () => {
-    try {
-      const res = await axios.get(ALL_DEALS_URL);
-      const deals = [];
-      let newDeal = await res.data;
-      deals.push(newDeal);
-      setDeals(deals);
-    } catch (e) {
-      //setDeals(e.message);
-    }
-  };
-
   const getDBConection = async () => {
-    try {
-      //const res = await axios.get(ALL_DEALS_URL);
-      //await res.data;
-
-    } catch (e) {
-    }
+    axios.get(environment.url + "/getData").then(res => {
+      setDbConnectionMsgOpen(res.isSuccsesfull);
+    });
   };
 
-  /*<Snackbar open={open} autoHideDuration={2000} >
-        <Alert severity="success">
-          This is a success message!
-        </Alert>
-      </Snackbar>*/
   return (
-    <>
-    <div className="container">
-        <AllDeals deals={deals}/>
-      </div>
-    </>
+      <>
+        <AppBar position="static">
+          <Toolbar>
+            <Typography variant="h6">
+              Deals
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Snackbar
+          anchorOrigin={{ vertical: "bottom", horizontal: "right"}}
+          open={dbConnectionMsgOpen}
+          autoHideDuration={2000}
+          message="Success db connection!"
+          onClose={() => setDbConnectionMsgOpen(false)}
+        />
+        <Router>
+          <Switch>
+              <Route path="/deals">
+                <AllDeals />
+              </Route>
+          </Switch>
+        </Router>
+      </>
   );
 }
 

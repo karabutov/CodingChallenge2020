@@ -1,15 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Deal from './Deal';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import {environment} from '../utils';
+import axios from 'axios';
+import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper} from'@material-ui/core';
 
 const AllDeals = props =>{
-    let deals = props.deals.map(currentDeal => (
+    const [deals, setDeals] = useState([]);
+
+    useEffect(() => {
+        getDeals();
+    }, []);
+
+    const getDeals = async () => {
+        try {
+          const res = await axios.get(environment.url + "/client/testservice");
+          const deals = [];
+          let newDeal = await res.data;
+          deals.push(newDeal);
+          setDeals(deals);
+        } catch (e) {
+        }
+    };
+    let dealsElements = deals.map(currentDeal => (
         <Deal
           deal={currentDeal}
           key={currentDeal.instrumentName}
@@ -28,7 +40,7 @@ const AllDeals = props =>{
                         <TableCell>Time</TableCell>
                     </TableRow>
                 </TableHead>
-                <TableBody>{deals}</TableBody>
+                <TableBody>{dealsElements}</TableBody>
             </Table>
         </TableContainer>
     );
