@@ -125,3 +125,18 @@ def convert_tuple_to_json(data):
                  'time': data[6]}
 
     return json_data
+
+
+def get_credentials(user, password):
+    connection = get_connection()
+    cursor = connection.cursor()
+    try:
+        select_counterparty_id = "SELECT * FROM users " \
+                                 "WHERE user_id = %s and user_pwd = %s"
+        cursor.execute(select_counterparty_id, (user,password))
+        res = cursor.fetchall()
+        return res
+
+    finally:
+        cursor.close()
+        close_connection(connection)
