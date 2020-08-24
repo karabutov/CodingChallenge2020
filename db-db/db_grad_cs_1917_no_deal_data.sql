@@ -66,7 +66,7 @@ DROP TABLE IF EXISTS `deal`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `deal` (
-  `deal_id` int(11) NOT NULL,
+  `deal_id` int(11) NOT NULL auto_increment,
   `deal_time` varchar(30) NOT NULL,
   `deal_counterparty_id` int(11) DEFAULT NULL,
   `deal_instrument_id` int(11) DEFAULT NULL,
@@ -165,3 +165,15 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2017-07-29 16:31:09
+
+LOCK TABLES `counterparty` WRITE;
+/*!40000 ALTER TABLE `counterparty` DISABLE KEYS */;
+INSERT INTO `counterparty` VALUES (701,'Lewis','A','2017-07-28 17:06:30'),(702,'Selvyn','A','2017-07-28 17:06:30'),(703,'Richard','A','2017-07-28 17:06:30'),(704,'Lina','A','2017-07-28 17:06:30'),(705,'John','A','2017-07-28 17:06:30'),(706,'Nidia','A','2017-07-28 17:06:30');
+/*!40000 ALTER TABLE `counterparty` ENABLE KEYS */;
+UNLOCK TABLES;
+
+LOCK TABLES `instrument` WRITE;
+/*!40000 ALTER TABLE `instrument` DISABLE KEYS */;
+INSERT INTO `instrument` VALUES (1001,'Astronomica'),(1002,'Borealis'),(1003,'Celestial'),(1004,'Deuteronic'),(1005,'Eclipse'),(1006,'Floral'),(1007,'Galactia'),(1008,'Heliosphere'),(1009,'Interstella'),(1010,'Jupiter'),(1011,'Koronis'),(1012,'Lunatic');
+/*!40000 ALTER TABLE `instrument` ENABLE KEYS */;
+UNLOCK TABLES;
