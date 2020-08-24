@@ -14,7 +14,7 @@ function App() {
 
   const getDBConection = async () => {
     axios.get(environment.url + "/getData").then(res => {
-      setDbConnectionMsgOpen(res.isSuccessfull);
+      setDbConnectionMsgOpen(res.data.isSuccessfull);
     });
   };
 
