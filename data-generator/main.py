@@ -20,6 +20,10 @@ def testservice():
 def stream():
     return webServiceStream.stream()
 
+@app.route('/streamDB')
+def stream_db():
+    return webServiceStream.stream_db()
+
 @app.route('/streamTest/sse')
 def sse_stream():
      return webServiceStream.sse_stream()
@@ -37,6 +41,13 @@ def login():
      user_id = request.form["username"]
      user_pwd = request.form["password"]
      return webServiceStream.is_user_in_db(user_id, user_pwd)
+
+
+@app.route('/getTopDeals')
+def get_top_deals():
+    return webServiceStream.get_top_deals()
+
+
 
 
 def bootapp():
