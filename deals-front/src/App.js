@@ -7,7 +7,7 @@ import {AppBar, Toolbar, Typography, Snackbar } from '@material-ui/core';
 import AllDeals from './Components/AllDeals';
 function App() {
 
-  const [dbConnectionMsgOpen, setDbConnectionMsgOpen] = useState(true);
+  const [dbConnectionMsgOpen, setDbConnectionMsgOpen] = useState(false);
   useEffect(() => {
     getDBConection();
   }, []);
