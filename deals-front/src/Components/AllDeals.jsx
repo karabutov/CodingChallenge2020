@@ -22,7 +22,7 @@ const AllDeals = props =>{
     let dealsElements = deals.map(currentDeal => (
         <Deal
           deal={currentDeal}
-          key={currentDeal.instrumentName}
+          key={currentDeal.id}
         />
     ));
     return(
