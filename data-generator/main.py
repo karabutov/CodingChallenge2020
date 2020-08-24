@@ -35,9 +35,11 @@ def get_data():
 def generate_data():
      return webServiceStream.generate_data()
 
-@app.route('/testDBConnection')
-def connect_to_db():
-    return webServiceStream.connect_to_db()
+
+@app.route('/getTopDeals')
+def get_top_deals():
+    return webServiceStream.get_top_deals()
+
 
 
 

@@ -103,11 +103,13 @@ def select_top_deals_data(amount=10):
                                     ON d.deal_instrument_id = i.instrument_id 
                                     INNER JOIN counterparty as c 
                                     ON d.deal_counterparty_id = c.counterparty_id 
-                                    ORDER BY deal_id DESC LIMIT 10'''
+                                    ORDER BY deal_id DESC LIMIT %s'''
         cursor.execute(select_deal_sql, (amount,))
         result = cursor.fetchall()
 
-        return result
+        res = [convert_tuple_to_json(line) for line in result]
+        return res
+
     finally:
         cursor.close()
         close_connection(connection)
@@ -117,10 +119,9 @@ def convert_tuple_to_json(data):
     json_data = {'id': data[0],
                  'instrumentName': data[1],
                  'cpty': data[2],
-                 'price': data[3],
+                 'price': float(data[3]),
                  'type': data[4],
                  'quantity': data[5],
                  'time': data[6]}
 
     return json_data
-

@@ -51,6 +51,10 @@ def sse_stream():
     return resp
 
 
+def get_top_deals(amount=10):
+    return json.dumps(dao.select_top_deals_data(amount))
+
+
 def get_time():
     """this could be any function that blocks until data is ready"""
     time.sleep(1.0)
