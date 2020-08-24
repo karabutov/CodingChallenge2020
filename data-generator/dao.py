@@ -5,7 +5,7 @@ import json
 
 def get_connection():
     connection = mysql.connector.connect(host='127.0.0.1',
-                                database='db_grad_cs_1917_no_deal_data',
+                                database='db_grad_cs_1917',
                                 user='root', password='ppp')
     return connection
 
@@ -75,6 +75,7 @@ def insert_data(rdd_json):
     finally:
         cursor.close()
         close_connection(connection)
+        return json.dumps(rdd_json)
 
 
 def select_all_deals_data():

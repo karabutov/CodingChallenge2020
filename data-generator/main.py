@@ -19,6 +19,10 @@ def testservice():
 def stream():
     return webServiceStream.stream()
 
+@app.route('/streamDB')
+def stream_db():
+    return webServiceStream.stream_db()
+
 @app.route('/streamTest/sse')
 def sse_stream():
      return webServiceStream.sse_stream()
@@ -30,6 +34,11 @@ def get_data():
 @app.route('/generateData')
 def generate_data():
      return webServiceStream.generate_data()
+
+@app.route('/testDBConnection')
+def connect_to_db():
+    return webServiceStream.connect_to_db()
+
 
 
 def bootapp():

@@ -7,6 +7,7 @@ import json
 from RandomDealData import *
 import mysql.connector
 import mysql.connector
+import dao
 
 app = Flask(__name__)
 CORS(app)
@@ -26,6 +27,15 @@ def stream():
         while True:
             #nonlocal instrList
             yield rdd.createRandomData(instrList) + "\n"
+    return Response(eventStream(), status=200, mimetype="text/event-stream")
+
+def stream_db():
+    #rdd = RandomDealData()
+    #instrList = rdd.createInstrumentList()
+    def eventStream():
+        while True:
+            #nonlocal instrList
+            yield dao.insert_data(dao.generate_random_deal()) + "\n"
     return Response(eventStream(), status=200, mimetype="text/event-stream")
 
 def sse_stream():
