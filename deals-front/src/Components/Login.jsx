@@ -58,15 +58,19 @@ const Login = () => {
         event.preventDefault();
         console.log(username);
         console.log(password);
-        localStorage.setItem('isLogged', true);
-        history.push("/deals");
-        /*axios.post(environment.url + "/login", { username, password })
+        // localStorage.setItem('isLogged', true);
+        // history.push("/deals");
+        let formdata = new FormData();
+        formdata.append('username', username)
+        formdata.append('password', password)
+        const config = {headers:{"content-type": "multipart/form-data"}}
+        axios.post(environment.url2 + "/login", formdata, config)
         .then((res) => {
-            if(res.data.isSuccessfull){
+            if(res.data.isPresented){
                 localStorage.setItem('isLogged', true);
                 history.push("/deals");
             }
-        });*/
+        });
        
     }
 }

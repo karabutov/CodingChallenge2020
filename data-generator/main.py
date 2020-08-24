@@ -36,7 +36,7 @@ def get_data():
 def generate_data():
      return webServiceStream.generate_data()
 
-@app.route('/login')
+@app.route('/login', methods=['POST'])
 def login():
      user_id = request.form["username"]
      user_pwd = request.form["password"]
