@@ -1,5 +1,6 @@
 import React from 'react';
 import {Redirect, Route} from "react-router-dom";
+import {isLoggedIn} from '../utils';
 
 const SecuredRoute = ({ component: Component, ...rest }) => (
     
@@ -15,10 +16,5 @@ const SecuredRoute = ({ component: Component, ...rest }) => (
       }
     />
 );
-
-const isLoggedIn = () => {
-    var isLogged = localStorage.getItem("isLogged");
-    return  isLogged != null && isLogged === 'true';
-};
 
 export default SecuredRoute;

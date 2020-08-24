@@ -1,16 +1,14 @@
 import React, { useState }  from 'react';
 import axios from 'axios';
 import {environment} from '../utils';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
+import {useHistory} from 'react-router-dom';
+import { Button, CssBaseline, TextField, Typography, Container} from '@material-ui/core';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-   
+  const history = useHistory();
+
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -61,10 +59,12 @@ const Login = () => {
         console.log(username);
         console.log(password);
         localStorage.setItem('isLogged', true);
+        history.push("/deals");
         /*axios.post(environment.url + "/login", { username, password })
         .then((res) => {
             if(res.data.isSuccessfull){
                 localStorage.setItem('isLogged', true);
+                history.push("/deals");
             }
         });*/
        
