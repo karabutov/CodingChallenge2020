@@ -1,5 +1,6 @@
 from flask import Flask, Response
 from flask_cors import CORS
+from flask import request
 import webServiceStream
 from RandomDealData import *
 
@@ -30,6 +31,12 @@ def get_data():
 @app.route('/generateData')
 def generate_data():
      return webServiceStream.generate_data()
+
+@app.route('/login')
+def login():
+     user_id = request.form["username"]
+     user_pwd = request.form["password"]
+     return webServiceStream.is_user_in_db(user_id, user_pwd)
 
 
 def bootapp():
