@@ -181,10 +181,19 @@ def get_realized_profit_loss():
                             INNER JOIN counterparty as c ON bw.deal_counterparty_id = c.counterparty_id
                             GROUP BY c.counterparty_name '''
         cursor.execute(select_realized)
-        res = cursor.fetchall()
+        result = cursor.fetchall()
+
+        res = [convert_report_tuple_to_json(line) for line in result]
         return res
 
     finally:
         cursor.close()
         close_connection(connection)
+
+
+def convert_report_tuple_to_json(data):
+    json_data = {'cpty': data[0],
+                 'realized': data[1]}
+
+    return json_data
 
