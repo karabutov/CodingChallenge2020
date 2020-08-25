@@ -140,3 +140,41 @@ def get_credentials(user, password):
     finally:
         cursor.close()
         close_connection(connection)
+
+
+def get_realized_profit_loss():
+    connection = get_connection()
+    cursor = connection.cursor()
+    try:
+        select_realized = ''' SELECT c.counterparty_name, 
+                            sum((sw.sell_weighted_price - bw.buy_weighted_price) * sw.sell_sum_quantity) as realized_profit
+                            FROM 
+                            
+                            (SELECT deal_counterparty_id, deal_instrument_id,  
+                            sum(deal_amount * deal_quantity) / sum(deal_quantity) as buy_weighted_price,
+                            sum(deal_quantity) as buy_sum_quantity
+                            FROM deal 
+                            WHERE deal_type = "B"
+                            GROUP BY deal_counterparty_id, deal_instrument_id) AS bw
+                            
+                            INNER JOIN 
+                            (SELECT deal_counterparty_id, deal_instrument_id,  
+                            sum(deal_amount * deal_quantity) / sum(deal_quantity) as sell_weighted_price,
+                            sum(deal_quantity) as sell_sum_quantity
+                            FROM deal 
+                            WHERE deal_type = "S"
+                            GROUP BY deal_counterparty_id, deal_instrument_id) AS sw
+                            
+                            ON bw.deal_counterparty_id = sw.deal_counterparty_id AND 
+                            bw.deal_instrument_id = sw.deal_instrument_id
+                            
+                            INNER JOIN counterparty as c ON bw.deal_counterparty_id = c.counterparty_id
+                            GROUP BY c.counterparty_name '''
+        cursor.execute(select_realized)
+        res = cursor.fetchall()
+        return res
+
+    finally:
+        cursor.close()
+        close_connection(connection)
+
