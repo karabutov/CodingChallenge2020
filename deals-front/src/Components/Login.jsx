@@ -24,7 +24,6 @@ const Login = () => {
               fullWidth
               label="Username"
               name="username"
-              autoFocus
               value = {username}
               onChange={e => setUsername(e.target.value)}
             />
