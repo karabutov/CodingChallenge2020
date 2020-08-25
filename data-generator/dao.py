@@ -5,7 +5,7 @@ import json
 
 def get_connection():
     connection = mysql.connector.connect(host='127.0.0.1',
-                                database='db_grad_cs_1917',
+                                database='db_grad_cs_1917_no_deal_data',
                                 user='root', password='ppp')
     return connection
 
