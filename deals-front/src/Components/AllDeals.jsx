@@ -3,14 +3,29 @@ import Deal from './Deal';
 import {environment} from '../utils';
 import axios from 'axios';
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button} from'@material-ui/core';
+import { useObservable } from 'rxjs-hooks';
+import { Observable } from 'rxjs';
+import { map, withLatestFrom } from 'rxjs/operators';
 
 const AllDeals = props =>{
     const [deals, setDeals] = useState([]);
-
-    useEffect(() => {
-        getDeals();
-    }, []);
-
+    const dealsArr = [];
+    const dealsObservable = Observable.create(observer => {
+        const source = new EventSource(environment.url + "/deals");
+            source.addEventListener("message", (deal) => {
+              observer.next(deal.data);
+        }, false);
+    });
+    dealsObservable.subscribe({
+        next: val => {
+            dealsArr.unshift(JSON.parse(val));
+            setDeals(dealsArr);
+            if (dealsArr.length >= 50) {
+                dealsArr.pop();
+            }
+        },
+        error: err => console.error('something wrong occurred: ' + err)
+    });
     const getDeals = async () => {
         try {
           const res = await axios.get(environment.url2 + "/getTopDeals");
@@ -22,12 +37,12 @@ const AllDeals = props =>{
     let dealsElements = deals.map(currentDeal => (
         <Deal
           deal={currentDeal}
-          key={currentDeal.id}
+          key={currentDeal.time}
         />
     ));
     return(
         <>
-            <Button onClick={getDeals}> Refresh</Button>
+            {/* <Button onClick={getDeals}> Refresh</Button> */}
             <TableContainer component={Paper}>
                 <Table aria-label="simple table">
                     <TableHead>
