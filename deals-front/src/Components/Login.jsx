@@ -60,7 +60,7 @@ const Login = () => {
         formdata.append('username', username)
         formdata.append('password', password)
         const config = {headers:{"content-type": "multipart/form-data"}}
-        axios.post(environment.url2 + "/login", formdata, config)
+        axios.post(environment.url + "/login", formdata, config)
         .then((res) => {
             if(res.data.isPresented){
                 localStorage.setItem('isLogged', true);
