@@ -19,9 +19,9 @@
 -- Table structure for table `anonymous_users`
 --
 
-CREATE DATABASE db_grad_cs_1917;
+CREATE DATABASE db_grad_cs_1917_no_deal_data;
 
-USE db_grad_cs_1917;
+USE db_grad_cs_1917_no_deal_data;
 
 DROP TABLE IF EXISTS `anonymous_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
