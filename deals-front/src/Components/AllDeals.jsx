@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Deal from './Deal';
 import {environment} from '../utils';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button} from'@material-ui/core';
 import { useObservable } from 'rxjs-hooks';
 import { Observable } from 'rxjs';
@@ -43,6 +44,7 @@ const AllDeals = props =>{
     return(
         <>
             {/* <Button onClick={getDeals}> Refresh</Button> */}
+            <Link to="/report">View Report</Link>
             <TableContainer component={Paper}>
                 <Table aria-label="simple table">
                     <TableHead>

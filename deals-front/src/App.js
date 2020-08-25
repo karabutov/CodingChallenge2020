@@ -8,6 +8,7 @@ import AllDeals from './Components/AllDeals';
 import Login from './Components/Login';
 import SecuredRoute from './Components/SecuredRoute';
 import AppHeader from './Components/AppHeader';
+import Report from './Components/Report';
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(isLoggedIn());
@@ -37,6 +38,7 @@ const App = () => {
       <Switch>
         <Redirect from="/" to="/deals" exact />
         <Route path="/login" component={Login} />
+        <Route path="/report" component={Report} />
         <SecuredRoute path="/deals" component={AllDeals} />
       </Switch>
     </Router>
