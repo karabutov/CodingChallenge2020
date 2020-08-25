@@ -36,10 +36,10 @@ const App = () => {
         onClose={() => setDbConnectionMsgOpen(false)}
       />
       <Switch>
-        <Redirect from="/" to="/deals" exact />
         <Route path="/login" component={Login} />
         <Route path="/report" component={Report} />
         <SecuredRoute path="/deals" component={AllDeals} />
+        <SecuredRoute path="/" component={AllDeals} />
       </Switch>
     </Router>
   );

@@ -6,10 +6,12 @@ import {Link} from 'react-router-dom';
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button} from'@material-ui/core';
 import { useObservable } from 'rxjs-hooks';
 import { Observable } from 'rxjs';
+import {useHistory} from 'react-router-dom';
 import { map, withLatestFrom } from 'rxjs/operators';
 
 const AllDeals = props =>{
     const [deals, setDeals] = useState([]);
+    const history = useHistory();
     const dealsArr = [];
     const dealsObservable = Observable.create(observer => {
         const source = new EventSource(environment.url + "/deals");
@@ -41,10 +43,16 @@ const AllDeals = props =>{
           key={currentDeal.time}
         />
     ));
+
+    const redirectToReport = () =>{
+        history.push("/report");
+        history.go(0);
+    }
+
     return(
         <>
             {/* <Button onClick={getDeals}> Refresh</Button> */}
-            <Link to="/report">View Report</Link>
+            <Button onClick={redirectToReport}> Report</Button>
             <TableContainer component={Paper}>
                 <Table aria-label="simple table">
                     <TableHead>

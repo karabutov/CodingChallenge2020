@@ -3,11 +3,12 @@ import BarChart from 'react-easy-bar-chart';
 import axios from 'axios';
 import { environment } from '../utils';
 import {Link} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button} from'@material-ui/core';
 
 const Report = () =>{
     const [reportData, setReportData] = useState([]);
-
+    const history = useHistory();
     useEffect(() => {
         getReportData();
     });
@@ -40,9 +41,14 @@ const Report = () =>{
         </TableRow>
     ));
 
+    const redirectToDeals = () =>{
+        history.push("/deals");
+        history.go(0);
+    }
+
     return(
         <>
-            <Link to="/deals">Deals</Link>
+            <Button onClick={redirectToDeals}> Deals</Button>
             <TableContainer>
                 <Table aria-label="simple table">
                     <TableHead>
