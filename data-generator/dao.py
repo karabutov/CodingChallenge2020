@@ -150,6 +150,3 @@ def get_credentials(user, password):
     finally:
         cursor.close()
         close_connection(connection)
-
-
-insert_data(generate_random_deal())
