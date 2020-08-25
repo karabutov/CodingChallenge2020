@@ -5,7 +5,7 @@ import json
 
 def get_connection():
     connection = mysql.connector.connect(host='127.0.0.1',
-                                database='db_grad_cs_1917_no_deal_data',
+                                database='db_grad_cs_1917',
                                 user='root', password='ppp')
     return connection
 
@@ -72,9 +72,19 @@ def insert_data(rdd_json):
                                          rdd_json['price'],
                                          rdd_json['quantity']))
         connection.commit()
+
+
     finally:
+        select_deal_sql = '''SELECT d.deal_id from deal as d where                                          
+                                                    d.deal_time = %s '''
+
+        cursor.execute(select_deal_sql, (rdd_json['time'],))
+        deal_id = cursor.fetchall()[0][0]
+
+        rdd_json.update({'id': deal_id})
         cursor.close()
         close_connection(connection)
+
         return json.dumps(rdd_json)
 
 
