@@ -193,7 +193,8 @@ def get_realized_profit_loss():
 
 def convert_report_tuple_to_json(data):
     json_data = {'cpty': data[0],
-                 'realized': data[1]}
+                 'realized': float(data[1])}
 
     return json_data
+
 

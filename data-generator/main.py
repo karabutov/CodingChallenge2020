@@ -48,6 +48,11 @@ def get_top_deals():
     return webServiceStream.get_top_deals()
 
 
+@app.route('/getRealizedProfitLoss')
+def realized_profit_loss():
+    return webServiceStream.get_realized_profit_loss()
+
+
 
 
 def bootapp():

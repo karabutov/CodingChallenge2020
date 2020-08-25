@@ -46,6 +46,11 @@ def get_user():
     return Response(r.iter_lines(chunk_size=1), mimetype="text/json")
 
 
+@app.route('/getRealizedProfitLoss')
+def get_realized_profit_loss():
+    r = requests.get('http://localhost:8080/getRealizedProfitLoss')
+    return Response(r.iter_lines(chunk_size=1), mimetype="text/json")
+
 
 
 

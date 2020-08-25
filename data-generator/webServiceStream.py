@@ -98,5 +98,8 @@ def is_user_in_db(user_id, user_pwd):
     return Response(json.dumps(resp), status=200, mimetype='application/json')
 
 
-
+def get_realized_profit_loss():
+    realized_profit_loss = dao.get_realized_profit_loss()
+    print(json.dumps(realized_profit_loss))
+    return Response(json.dumps(realized_profit_loss), status=200, mimetype='application/json')
 
