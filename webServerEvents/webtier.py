@@ -18,6 +18,15 @@ def forwardStream():
                     yield 'data:{}\n\n'.format(line.decode())
     return Response(eventStream(), mimetype="text/event-stream")
 
+@app.route('/dealsDB')
+def deal_db():
+    r = requests.get('http://localhost:8080/streamDB', stream=True)
+    def eventStream():
+            for line in r.iter_lines(chunk_size=1):
+                if line:
+                    yield 'data:{}\n\n'.format(line.decode())
+    return Response(eventStream(), mimetype="text/event-stream")
+
 @app.route('/client/testservice')
 def client_to_server():
     r = requests.get('http://localhost:8080/testservice')
@@ -35,6 +44,10 @@ def get_user():
     data = {'username': username, 'password': password}
     r = requests.post('http://localhost:8080/login', data=data)
     return Response(r.iter_lines(chunk_size=1), mimetype="text/json")
+
+
+
+
 
 @app.route('/')
 @app.route('/index')
