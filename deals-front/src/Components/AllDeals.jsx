@@ -14,7 +14,7 @@ const AllDeals = props =>{
     const history = useHistory();
     const dealsArr = [];
     const dealsObservable = Observable.create(observer => {
-        const source = new EventSource(environment.url + "/deals");
+        const source = new EventSource(environment.url + "/dealsDB");
             source.addEventListener("message", (deal) => {
               observer.next(deal.data);
         }, false);
