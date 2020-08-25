@@ -1,25 +1,34 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useHistory} from 'react-router-dom';
-import {isLoggedIn } from '../utils';
-import {AppBar, Toolbar, Typography, Button } from '@material-ui/core';
+import {AppBar, Toolbar, Typography, Button, Grid } from '@material-ui/core';
 
-const AppHeader = () => {
+const AppHeader = props => {
     const history = useHistory();
-    const [loggedIn, setLoggedIn] = useState(isLoggedIn());
-
+    
     const logOut = () => {
         localStorage.removeItem('isLogged');
-        setLoggedIn(false);
         history.push("/login");
+        history.go(0);
     }
 
     return (
-        <AppBar position="static">
+      <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6">
-            Deals
-          </Typography>
-          {loggedIn ? <Button onClick={logOut}> Log out </Button> : null}
+          <Grid justify="space-between" container>
+            <Grid item>
+              <Typography variant="h6">
+                Deals
+              </Typography>
+            </Grid>
+
+            { 
+              props.loggedIn 
+              ? <Grid item>
+                  <Button style={{color: "white"}} onClick={logOut}> Log out </Button> 
+                </Grid>
+              : null
+            }
+          </Grid>
         </Toolbar>
       </AppBar>
     );

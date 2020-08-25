@@ -24,7 +24,6 @@ const Login = () => {
               fullWidth
               label="Username"
               name="username"
-              autoComplete="username"
               autoFocus
               value = {username}
               onChange={e => setUsername(e.target.value)}
@@ -37,7 +36,6 @@ const Login = () => {
               name="password"
               label="Password"
               type="password"
-              autoComplete="current-password"
               value = {password}
               onChange={e => setPassword(e.target.value)}
             />
@@ -56,10 +54,9 @@ const Login = () => {
 
     function onLoginFormSubmit(event){
         event.preventDefault();
-        console.log(username);
-        console.log(password);
-        // localStorage.setItem('isLogged', true);
-        // history.push("/deals");
+        /*localStorage.setItem('isLogged', true);
+        history.push("/deals");
+        history.go(0);*/
         let formdata = new FormData();
         formdata.append('username', username)
         formdata.append('password', password)
@@ -69,9 +66,9 @@ const Login = () => {
             if(res.data.isPresented){
                 localStorage.setItem('isLogged', true);
                 history.push("/deals");
+                history.go(0);
             }
         });
-       
     }
 }
 export default Login;

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import axios from 'axios';
 import './App.css';
-import { environment } from './utils';
+import { environment, isLoggedIn } from './utils';
 import {Snackbar } from '@material-ui/core';
 import AllDeals from './Components/AllDeals';
 import Login from './Components/Login';
@@ -10,10 +10,12 @@ import SecuredRoute from './Components/SecuredRoute';
 import AppHeader from './Components/AppHeader';
 
 const App = () => {
-
+  const [loggedIn, setLoggedIn] = useState(isLoggedIn());
   const [dbConnectionMsgOpen, setDbConnectionMsgOpen] = useState(false);
+  
   useEffect(() => {
     getDBConection();
+    setLoggedIn(isLoggedIn());
   }, []);
 
   const getDBConection = async () => {
@@ -24,7 +26,7 @@ const App = () => {
 
   return (
     <Router>
-      <AppHeader isLoggedIn/>
+      <AppHeader loggedIn={loggedIn}/>
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         open={dbConnectionMsgOpen}
@@ -33,11 +35,9 @@ const App = () => {
         onClose={() => setDbConnectionMsgOpen(false)}
       />
       <Switch>
-        <Route path="/login">
-          <Login />
-        </Route>
+        <Redirect from="/" to="/deals" exact />
+        <Route path="/login" component={Login} />
         <SecuredRoute path="/deals" component={AllDeals} />
-        <SecuredRoute path="/" component={AllDeals} />
       </Switch>
     </Router>
   );
